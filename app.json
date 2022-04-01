@@ -1,0 +1,8 @@
+{
+  "name": "my-silver-screen",
+  "buildpacks": [
+    {
+      "url": "heroku/gradle"
+    }
+  ]
+}
