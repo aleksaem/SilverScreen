@@ -1,4 +1,4 @@
-package com.movieland.cinema;
+package com.machkur.movieland;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

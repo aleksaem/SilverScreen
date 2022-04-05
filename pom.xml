@@ -8,7 +8,7 @@
         <version>2.6.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.movieland</groupId>
+    <groupId>com.machkur.movieland</groupId>
     <artifactId>movie</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>movie</name>
@@ -20,10 +20,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
