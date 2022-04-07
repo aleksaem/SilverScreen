@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,7 +22,7 @@ public class Country {
     private Long id;
     private String name;
 
-//    @ManyToMany(mappedBy = "countries")
-//    private Set<Movie> movies = new HashSet<>();
+    @ManyToMany(mappedBy = "countries")
+    private Set<Movie> movies;
 
 }

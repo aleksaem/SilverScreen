@@ -20,8 +20,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+    @Column(name = "user_name")
     private String name;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Review> reviews;
 
 }

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query(nativeQuery = true, value =
-            "SELECT movie_id, native_name, russian_name, description, price, rating, year FROM movies m WHERE ? = any (m.genre_id);")
+            "SELECT movie_id, movie_name, russian_name, description, price, rating, year, picture_path FROM movies m WHERE ? = any (m.genre_id);")
     Iterable<Movie> findAllByGenresId(Long genreId);
 
-    @Query(nativeQuery=true, value="SELECT movie_id, native_name, russian_name, description, price, rating, year  FROM movies ORDER BY random() LIMIT 3")
+    @Query(nativeQuery=true, value="SELECT movie_id, movie_name, russian_name, description, price, rating, year, picture_path  FROM movies ORDER BY random() LIMIT 3")
     Iterable<Movie> fetchThreeRandomMovies();
 }

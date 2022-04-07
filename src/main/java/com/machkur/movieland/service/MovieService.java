@@ -18,6 +18,8 @@ public interface MovieService {
 
     Iterable<Movie> fetchMoviesByGenre(Long genreId);
 
+    Movie fetchMovieById(Long movieId);
+
     Iterable<Movie> sortMoviesByRating();
 
     Iterable<Movie> sortMoviesByPrice(SortingRoute sortingRoute);

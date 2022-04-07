@@ -75,6 +75,17 @@ public class DefaultMovieService implements MovieService {
     }
 
     @Override
+    public Movie fetchMovieById(Long movieId) {
+        Optional<Movie> foundMovie = movieRepository.findById(movieId);
+
+        if (foundMovie.isPresent()) {
+            return foundMovie.get();
+        } else {
+            throw new IllegalArgumentException("Movie with id " + movieId + " doesn`t exist");
+        }
+    }
+
+    @Override
     public Iterable<Movie> sortMoviesByRating() {
         return movieRepository.findAll(Sort.by(Sort.Direction.DESC, "rating"));
     }

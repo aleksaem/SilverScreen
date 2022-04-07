@@ -1,6 +1,7 @@
 package com.machkur.movieland.controller;
 
-import com.machkur.movieland.entity.Genre;
+import com.machkur.movieland.dto.GenreWithoutMovieDto;
+import com.machkur.movieland.mapper.list.GenreListMapper;
 import com.machkur.movieland.service.GenreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class GenreController {
     }
 
     @GetMapping
-    public Iterable<Genre> fetchGenreList(){
-        return genreService.fetchGenreList();
+    public Iterable<GenreWithoutMovieDto> fetchGenreList(){
+        return GenreListMapper.GENRE_LIST_MAPPER.genreToGenreWithoutMovieDtos(genreService.fetchGenreList());
     }
 }

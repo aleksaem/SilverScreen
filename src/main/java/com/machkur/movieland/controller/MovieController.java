@@ -1,8 +1,11 @@
 package com.machkur.movieland.controller;
 
+import com.machkur.movieland.dto.FullMovieDto;
+import com.machkur.movieland.dto.SimpleMovieDto;
 import com.machkur.movieland.entity.Movie;
+import com.machkur.movieland.mapper.MovieMapper;
+import com.machkur.movieland.mapper.list.MovieListMapper;
 import com.machkur.movieland.request.Request;
-import com.machkur.movieland.request.SortingRoute;
 import com.machkur.movieland.request.SortBy;
 import com.machkur.movieland.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,31 +27,32 @@ public class MovieController {
     }
 
     @PostMapping
-    public Movie addMovie(@RequestBody Movie movie) {
+    public SimpleMovieDto addMovie(@RequestBody Movie movie) {
         log.info("Saving movie: {}", movie);
-        return movieService.addMovie(movie);
+        return MovieMapper.MOVIE_MAPPER.movieToSimpleMovieDto(movieService.addMovie(movie));
     }
 
     @GetMapping
-    public Iterable<Movie> fetchMoviesList(@Valid @RequestBody(required = false) Request request) {
+    public Iterable<SimpleMovieDto> fetchMoviesList(@Valid @RequestBody(required = false) Request request) {
         if (request.getSortingStrategy().getSortBy().equals(SortBy.PRICE)) {
-            return movieService.sortMoviesByPrice(request.getSortingStrategy().getSortingRoute());
+            return MovieListMapper.MOVIE_LIST_MAPPER.movieToSimpleMovieDtos(
+                    movieService.sortMoviesByPrice(request.getSortingStrategy().getSortingRoute()));
         } else if (request.getSortingStrategy().getSortBy().equals(SortBy.RATING)) {
-            return movieService.sortMoviesByRating();
+            return MovieListMapper.MOVIE_LIST_MAPPER.movieToSimpleMovieDtos(movieService.sortMoviesByRating());
         }
-        return movieService.fetchMoviesList();
+        return MovieListMapper.MOVIE_LIST_MAPPER.movieToSimpleMovieDtos(movieService.fetchMoviesList());
     }
 
     @GetMapping("/random")
-    public Iterable<Movie> fetchThreeRandomMovies() {
-        return movieService.fetchThreeRandomMovies();
+    public Iterable<SimpleMovieDto> fetchThreeRandomMovies() {
+        return MovieListMapper.MOVIE_LIST_MAPPER.movieToSimpleMovieDtos(movieService.fetchThreeRandomMovies());
     }
 
     @PutMapping("/{id}")
-    public Movie editMovie(@PathVariable("id") Long movieId,
-                           @RequestBody Movie movie) {
+    public SimpleMovieDto editMovie(@PathVariable("id") Long movieId,
+                                    @RequestBody Movie movie) {
         log.info("Editing movie with id {}", movieId);
-        return movieService.editMovie(movieId, movie);
+        return MovieMapper.MOVIE_MAPPER.movieToSimpleMovieDto(movieService.editMovie(movieId, movie));
     }
 
     @DeleteMapping("/{id}")
@@ -58,7 +62,12 @@ public class MovieController {
     }
 
     @GetMapping("/genre/{genreId}")
-    public Iterable<Movie> fetchMoviesList(@PathVariable Long genreId) {
-        return movieService.fetchMoviesByGenre(genreId);
+    public Iterable<SimpleMovieDto> fetchMoviesList(@PathVariable Long genreId) {
+        return MovieListMapper.MOVIE_LIST_MAPPER.movieToSimpleMovieDtos(movieService.fetchMoviesByGenre(genreId));
+    }
+
+    @GetMapping("/{id}")
+    public FullMovieDto fetchMovieById(@PathVariable("id") Long movieId){
+        return MovieMapper.MOVIE_MAPPER.movieToFullMovieDto(movieService.fetchMovieById(movieId));
     }
 }

@@ -21,4 +21,12 @@ public class Review {
     private Long id;
     private String review;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }
