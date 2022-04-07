@@ -6,26 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "genres")
+@Table(name = "genres", schema = "public")
 public class Genre {
 
     @Id
-    @SequenceGenerator(name = "genre_sequence",
-            sequenceName = "genre_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "genre_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "genre_id")
     private Long id;
+    @Column(name = "genre")
     private String name;
-
-    @ManyToMany(mappedBy = "genres")
-    private Set<Movie> movies = new HashSet<>();
-
 }

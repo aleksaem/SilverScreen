@@ -1,16 +1,14 @@
 package com.machkur.movieland.service.implementation;
 
-import com.machkur.movieland.entity.Genre;
 import com.machkur.movieland.entity.Movie;
-import com.machkur.movieland.entity.util.SortingRoute;
+import com.machkur.movieland.request.SortingRoute;
 import com.machkur.movieland.repository.MovieRepository;
 import com.machkur.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.StreamSupport;
+import java.util.Optional;
 
 @Service
 public class DefaultMovieService implements MovieService {
@@ -35,8 +33,30 @@ public class DefaultMovieService implements MovieService {
 
     @Override
     public Movie editMovie(Long movieId, Movie movie) {
-        movie.setId(movieId);
-        return movieRepository.save(movie);
+        Optional<Movie> byId = movieRepository.findById(movieId);
+        Movie foundMovie = null;
+        if (byId.isPresent()) {
+            foundMovie = byId.get();
+            if (movie.getNativeName() != null) {
+                foundMovie.setNativeName(movie.getNativeName());
+            }
+            if (movie.getRussianName() != null) {
+                foundMovie.setRussianName(movie.getRussianName());
+            }
+            if (movie.getDescription() != null) {
+                foundMovie.setDescription(movie.getDescription());
+            }
+            if (movie.getYear() != 0) {
+                foundMovie.setYear(movie.getYear());
+            }
+            if (movie.getRating() != 0.0) {
+                foundMovie.setRating(movie.getRating());
+            }
+            if (movie.getPrice() != 0.0) {
+                foundMovie.setPrice(movie.getPrice());
+            }
+        }
+        return movieRepository.save(foundMovie);
     }
 
     @Override
@@ -46,28 +66,17 @@ public class DefaultMovieService implements MovieService {
 
     @Override
     public Iterable<Movie> fetchThreeRandomMovies() {
-        Long quantity = movieRepository.count();
-        int index = (int) (Math.random() * quantity);
-        Iterable<Movie> movies = movieRepository.findAll(PageRequest.of(index, 3));
-        long movieSize = StreamSupport.stream(movies.spliterator(), false).count();
-        if (movieSize > 0) {
-            return movies;
-        }
-        return null;
+        return movieRepository.fetchThreeRandomMovies();
     }
 
     @Override
-    public Iterable<Movie> fetchMoviesByGenre(Genre genre) {
-        return movieRepository.findAllByGenresId(genre.getId());
+    public Iterable<Movie> fetchMoviesByGenre(Long genreId) {
+        return movieRepository.findAllByGenresId(genreId);
     }
 
     @Override
-    public Iterable<Movie> sortMoviesByRating(SortingRoute sortingRoute) {
-        if (sortingRoute.toString().equals("ASC")) {
-            return movieRepository.findAll(Sort.by(Sort.Direction.ASC, "rating"));
-        } else {
-            return movieRepository.findAll(Sort.by(Sort.Direction.DESC, "rating"));
-        }
+    public Iterable<Movie> sortMoviesByRating() {
+        return movieRepository.findAll(Sort.by(Sort.Direction.DESC, "rating"));
     }
 
     @Override

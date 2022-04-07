@@ -12,23 +12,13 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "review")
+@Table(name = "reviews", schema = "public")
 public class Review {
 
     @Id
-    @SequenceGenerator(name = "review_sequence",
-            sequenceName = "review_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "review_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Long id;
     private String review;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_reviews", nullable = false)
-    private Movie movie;
-
-    @ManyToOne
-    @JoinColumn(name = "users_reviews", nullable = false)
-    private User user;
 
 }

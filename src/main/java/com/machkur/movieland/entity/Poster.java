@@ -12,16 +12,15 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "poster")
+@Table(name = "posters")
 public class Poster {
 
     @Id
-    @SequenceGenerator(name = "poster_sequence",
-            sequenceName = "poster_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "poster_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "poster_id")
     private Long id;
     private String link;
     private String movieName;
+
 
 }

@@ -1,5 +1,6 @@
-package com.machkur.movieland.entity.util;
+package com.machkur.movieland.request;
 
 public enum SortingRoute {
     ASC, DESC
+
 }

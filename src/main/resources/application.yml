@@ -2,9 +2,9 @@ spring:
   main:
     banner_mode: off
   datasource:
-    url: jdbc:postgresql://ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d68cl5isr7cf6k
-    username: qcezjpvomgljcb
-    password: 4eed03dc2cabfa4e90e86c297dd27a87a99af2ce43e92695c9715ebb5cd8b23c
+      url: jdbc:postgresql://ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d68cl5isr7cf6k
+      username: qcezjpvomgljcb
+      password: 4eed03dc2cabfa4e90e86c297dd27a87a99af2ce43e92695c9715ebb5cd8b23c
   jpa:
     hibernate:
       ddl-auto: update

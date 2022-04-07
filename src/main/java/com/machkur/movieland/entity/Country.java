@@ -14,18 +14,16 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "countries")
+@Table(name = "countries", schema = "public")
 public class Country {
 
     @Id
-    @SequenceGenerator(name = "country_sequence",
-            sequenceName = "country_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "country_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "country_id")
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "countries")
-    private Set<Movie> movies = new HashSet<>();
+//    @ManyToMany(mappedBy = "countries")
+//    private Set<Movie> movies = new HashSet<>();
 
 }
